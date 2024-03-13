@@ -1,4 +1,4 @@
-from flask import Flask, render_template_string
+from flask import Flask, render_template
 import requests
 
 app = Flask(__name__)
@@ -18,29 +18,8 @@ def bitcoin_price():
     binance_data = binance_response.json()
     binance_price = binance_data['price']
 
-    # HTML 템플릿
-    html_template = """
-    <h1>Bitcoin Price Information</h1>
-    <table border="1">
-        <tr>
-            <th>Exchange</th>
-            <th>Price</th>
-            <th>24h Change (%)</th>
-        </tr>
-        <tr>
-            <td>Upbit (KRW)</td>
-            <td>{{ upbit_price }}</td>
-            <td>{{ upbit_change }}</td>
-        </tr>
-        <tr>
-            <td>Binance (USDT)</td>
-            <td>{{ binance_price }}</td>
-            <td>N/A</td>
-        </tr>
-    </table>
-    """
-
-    return render_template_string(html_template, upbit_price=upbit_price, upbit_change=upbit_change, binance_price=binance_price)
+    # 'index.html' 템플릿으로 변수 전달
+    return render_template('index.html', upbit_price=upbit_price, upbit_change=upbit_change, binance_price=binance_price)
 
 if __name__ == '__main__':
     app.run(debug=True)
